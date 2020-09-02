@@ -29,18 +29,23 @@
           update: update,
         },
       };
-      let slotmachine = false
-      let slotText = new Array(3)
+
+
       const game = new Phaser.Game(config);
 
       function preload() {
         this.load.image('sky', 'assets/sky.png')
         this.load.image('button', 'assets/platform.png')
+        this.load.image('star', 'assets/star.png')
       }
 
-
       function create() {
+        let slotmachine = false
+        let gainStar = false
+        let slotText = new Array(3)
+        let style = {font: "bold 32px Arial", fill: "#fff"}
         this.add.image(400, 300, 'sky')
+        this.add.text(this.cameras.main.centerX,this.cameras.main.centerY-250, 'CLICK THE GREEN BUTTON TO SPIN!', style).setOrigin(0.5)
 
         this.clickButton = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY+200, 'button')
         .setInteractive()
@@ -50,19 +55,22 @@
                     slotText[step].destroy()
                 }  
                 slotmachine = false
+                if(gainStar == true){
+                    star.destroy()
+                    gainStar = false
+                }
             }
+
             for (let step = 0; step < 3; step++) {
-                slotText[step] = this.add.text(300 + (step*100), 300, createRandom())
+                slotText[step] = this.add.text(300 + (step*100), 300, createRandom(), style)
             }   
-
-            // slotText = this.add.text(300 + (0*100), 300, createRandom())
-            // slotText2 = this.add.text(300 + (1*100), 300, createRandom())
-            // slotText3 = this.add.text(300 + (2*100), 300, createRandom())
-
             console.log(slotText[0].text, slotText[1].text, slotText[2].text)
             slotmachine = true
 
-
+            if(slotText[0].text === slotText[1].text  && slotText[0].text === slotText[2].text){
+                star = this.add.image(400, 200, 'star')
+                gainStar = true
+            }
         });
       }
 
