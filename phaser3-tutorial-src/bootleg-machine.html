@@ -43,7 +43,12 @@
         let slotmachine = false
         let gainStar = false
         let slotText = new Array(3)
-        let style = {font: "bold 32px Arial", fill: "#fff"}
+        let slotTextBoven = new Array(3)
+        let slotTextOnder = new Array(3)
+        let style = {font: 'bold 32px Arial', fill: '#fff'}
+        let styleNA = {font: 'bold 20px Arial', fill: 'rgba(255,255,255, 0.4)'}
+
+
         this.add.image(400, 300, 'sky')
         this.add.text(this.cameras.main.centerX,this.cameras.main.centerY-250, 'CLICK THE GREEN BUTTON TO SPIN!', style).setOrigin(0.5)
 
@@ -53,6 +58,8 @@
             if(slotmachine == true){
                 for (let step = 0; step < 3; step++) {
                     slotText[step].destroy()
+                    slotTextBoven[step].destroy()
+                    slotTextOnder[step].destroy()
                 }  
                 slotmachine = false
                 if(gainStar == true){
@@ -63,7 +70,11 @@
 
             for (let step = 0; step < 3; step++) {
                 slotText[step] = this.add.text(300 + (step*100), 300, createRandom(), style)
-            }   
+
+                // slotTextBoven[step] = this.add.text(300 + (step*100), 250, slotText[step].text -1, styleNA)
+                // slotTextOnder[step] = this.add.text(300 + (step*100), 350, slotText[step].text +1, styleNA)
+            }
+
             console.log(slotText[0].text, slotText[1].text, slotText[2].text)
             slotmachine = true
 
