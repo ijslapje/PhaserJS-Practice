@@ -30,6 +30,9 @@
         },
       };
 
+      //Verander hier je minimale en maximale waarde
+      const min = 1
+      const max = 15
 
       const game = new Phaser.Game(config);
 
@@ -58,8 +61,8 @@
             if(slotmachine == true){
                 for (let step = 0; step < 3; step++) {
                     slotText[step].destroy()
-                    // slotTextBoven[step].destroy()
-                    // slotTextOnder[step].destroy()
+                    slotTextBoven[step].destroy()
+                    slotTextOnder[step].destroy()
                 }  
                 slotmachine = false
                 if(gainStar == true){
@@ -71,8 +74,18 @@
             for (let step = 0; step < 3; step++) {
                 slotText[step] = this.add.text(300 + (step*100), 300, createRandom(), style)
 
-                // slotTextBoven[step] = this.add.text(300 + (step*100), 250, slotText[step].text -1, styleNA)
-                // slotTextOnder[step] = this.add.text(300 + (step*100), 350, slotText[step].text +1, styleNA)
+                slotTextBoven[step] = this.add.text(300 + (step*100), 250, slotText[step].text -1, styleNA)
+                slotTextOnder[step] = this.add.text(300 + (step*100), 350, parseInt(slotText[step].text) +1, styleNA)
+
+                if(slotTextBoven[step].text == min-1){
+                  slotTextBoven[step].destroy()
+                  slotTextBoven[step] = this.add.text(300 + (step*100), 250, max, styleNA)
+                }
+                else if(slotTextOnder[step].text == max+1)
+                {
+                  slotTextOnder[step].destroy()
+                  slotTextOnder[step] = this.add.text(300 + (step*100), 350, min, styleNA)
+                }
             }
 
             console.log(slotText[0].text, slotText[1].text, slotText[2].text)
@@ -90,7 +103,7 @@
       }
 
       function createRandom(rnd){
-          return Phaser.Math.Between(1, 15)
+          return Phaser.Math.Between(min, max)
       }
 
     </script>
